@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { getAllJobsThunk, showStatsThunk } from './allJobThunk';
 
@@ -21,13 +21,16 @@ const initialState = {
     ...initialFiltersState,
 };
 
+export const getAllJobs=createAsyncThunk('allJobs/getJobs', getAllJobsThunk);
+export const showStats=createAsyncThunk('allJobs/showStats', showStatsThunk);
+
 const allJobsSlice=createSlice({
     name: 'allJobs',
     initialState,
     reducers: {
         clearAllJobsState: () => initialState,
         handleChange: (state, { payload: { name, value } }) => {
-            // state.page = 1;
+            state.page = 1;
             state[name]=value;
         },
         clearFilters: (state) => {
@@ -43,33 +46,34 @@ const allJobsSlice=createSlice({
             state.page=payload;
         },
     },
-    extraReducers: {
-        [getAllJobsThunk.pending]: (state) => {
-            state.isLoading=true;
-        },
-        [getAllJobsThunk.fulfilled]: (state, { payload }) => {
-            state.isLoading=false;
-            state.jobs=payload.jobs;
-            state.numOfPages=payload.numOfPages;
-            state.totalJobs=payload.totalJobs;
-        },
-        [getAllJobsThunk.rejected]: (state, { payload }) => {
-            state.isLoading=false;
-            toast.error(payload);
-        },
-        [showStatsThunk.pending]: (state) => {
-            state.isLoading=true;
-        },
-        [showStatsThunk.fulfilled]: (state, { payload }) => {
-            state.isLoading=false;
-            state.stats=payload.defaultStats;
-            state.monthlyApplications=payload.monthlyApplications;
-        },
-        [showStatsThunk.rejected]: (state, { payload }) => {
-            state.isLoading=false;
-            toast.error(payload);
-        },
-    }
+    extraReducers: (builder) => {
+        builder
+            .addCase(getAllJobs.pending, (state) => {
+                state.isLoading=true;
+            })
+            .addCase(getAllJobs.fulfilled, (state, { payload }) => {
+                state.isLoading=false;
+                state.jobs=payload.jobs;
+                state.numOfPages=payload.numOfPages;
+                state.totalJobs=payload.totalJobs;
+            })
+            .addCase(getAllJobs.rejected, (state, { payload }) => {
+                state.isLoading=false;
+                toast.error(payload);
+            })
+            .addCase(showStats.pending, (state) => {
+                state.isLoading=true;
+            })
+            .addCase(showStats.fulfilled, (state, { payload }) => {
+                state.isLoading=false;
+                state.stats=payload.defaultStats;
+                state.monthlyApplications=payload.monthlyApplications;
+            })
+            .addCase(showStats.rejected, (state, { payload }) => {
+                state.isLoading=false;
+                toast.error(payload);
+            });
+    },
 });
 
 

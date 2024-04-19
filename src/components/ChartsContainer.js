@@ -5,7 +5,7 @@ import Wrapper from '../assets/wrappers/ChartsContainer';
 import { useSelector } from 'react-redux';
 
 
-const ChartsContainer=() => {
+export const ChartsContainer=() => {
     const [barChart, setBarChart]=useState(true);
     const { monthlyApplications: data }=useSelector((store) => store.allJobs);
     return (
@@ -18,5 +18,3 @@ const ChartsContainer=() => {
         </Wrapper>
     );
 };
-
-export default ChartsContainer;

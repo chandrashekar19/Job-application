@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import Job from './Job';
 import Wrapper from '../assets/wrappers/JobsContainer';
 import { useSelector, useDispatch } from 'react-redux';
-import Loading from './Loading';
-import { getAllJobsThunk } from '../features/allJobs/allJobThunk';
 import PageBtnContainer from './PageBtnContainer';
+import { Loading } from './Loading';
+import { getAllJobs } from '../features/allJobs/allJobsSlice';
 
 
 export const JobsContainer = () => {
@@ -14,7 +14,7 @@ export const JobsContainer = () => {
     const dispatch=useDispatch();
 
     useEffect(() => {
-        dispatch(getAllJobsThunk());
+        dispatch(getAllJobs());
     }, []);
 
     if (isLoading) {

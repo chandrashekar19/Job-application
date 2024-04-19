@@ -1,6 +1,6 @@
 import Wrapper from '../assets/wrappers/StatItem';
 
-const StatItem=({ count, title, icon, color, bcg }) => {
+export const StatItem=({ count, title, icon, color, bcg }) => {
     return (
         <Wrapper color={color} bcg={bcg}>
             <header>
@@ -11,5 +11,3 @@ const StatItem=({ count, title, icon, color, bcg }) => {
         </Wrapper>
     );
 };
-
-export default StatItem;
