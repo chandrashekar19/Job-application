@@ -9,16 +9,15 @@ import {
   getUserFromLocalStorage,
   removeUserFromLocalStorage,
 } from '../../utils/localStorage'
-import { loginUserThunk, registerUserThunk, updateUserThunk } from './userThunk';
-import { clearStoreThunk } from './userThunk';
-export const clearStore=createAsyncThunk('user/clearStore', clearStoreThunk);
-
-
+import { loginUserThunk, registerUserThunk, updateUserThunk, clearStoreThunk } from './userThunk';
 const initialState = {
   isLoading: false,
   isSidebarOpen: false,
   user: getUserFromLocalStorage(),
 }
+
+
+export const clearStore=createAsyncThunk('user/clearStore', clearStoreThunk);
 
 export const registerUser = createAsyncThunk(
   'user/registerUser',

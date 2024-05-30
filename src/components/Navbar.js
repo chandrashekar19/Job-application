@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { FaHome, FaAlignLeft, FaUserCircle, FaCaretDown } from 'react-icons/fa'
+import {  FaAlignLeft, FaUserCircle, FaCaretDown } from 'react-icons/fa'
 import Wrapper from '../assets/wrappers/Navbar'
 import Logo from './Logo'
 import { useDispatch, useSelector } from 'react-redux'
-import { toggleSidebar, logoutUser, clearStore } from '../features/user/userSlice'
+import { toggleSidebar, clearStore } from '../features/user/userSlice'
 
 const Navbar = () => {
-  const [showLogout, setShowLogout] = useState(false)
+  const [showLogout, setShowLogout] = useState(false);
   const { user } = useSelector((store) => store.user)
   const dispatch = useDispatch()
 
@@ -34,16 +34,19 @@ const Navbar = () => {
             {user?.name}
             <FaCaretDown />
           </button>
-          <button
-            type='button'
-            className='dropdown-btn'
-            onClick={() => dispatch(clearStore('Logging out...'))}
-          >
-            logout
-          </button>
+          <div className={showLogout? 'dropdown show-dropdown':'dropdown'}>
+            <button
+              type='button'
+              className='dropdown-btn'
+              onClick={() => {
+                dispatch(clearStore());
+              }}
+            >
+              logout
+            </button>
+          </div>
         </div>
       </div>
-      <FaHome />
     </Wrapper>
   )
 }
